@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from 'react';
 import { Room } from '../types';
 import Loading from './Loading';
