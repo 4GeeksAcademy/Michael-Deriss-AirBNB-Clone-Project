@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { useEffect, useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +24,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [showSearchBar, setShowSearchBar] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowSearchBar(false);
+      } else {
+        setShowSearchBar(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
@@ -67,50 +83,22 @@ export default function RootLayout({
           </div>
         </nav>
 
-        {/* Sticky search bar below nav */}
-        <div className="relative top-[72px] z-30 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm py-4" id="search-bar">
-          <div className="flex flex-col items-center">
-            <div className="flex gap-4 w-full max-w-2xl items-center justify-center">
-              <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">Where</button>
-              <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">When</button>
-              <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">Who</button>
-              <button className="px-6 py-3 bg-red-500 text-white rounded-full font-bold text-lg shadow-md ml-2 hover:bg-red-600 transition">Search</button>
+        {/* Search bar visibility controlled by state */}
+        {showSearchBar && (
+          <div className="relative top-[72px] z-30 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm py-4">
+            <div className="flex flex-col items-center">
+              <div className="flex gap-4 w-full max-w-2xl items-center justify-center">
+                <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">Where</button>
+                <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">When</button>
+                <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">Who</button>
+                <button className="px-6 py-3 bg-red-500 text-white rounded-full font-bold text-lg shadow-md ml-2 hover:bg-red-600 transition">Search</button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Scroll behavior for search bar */}
-        <script>
-          import { useEffect } from 'react';
-          import { useState } from 'react';
-
-          export default function Layout() {
-            const [showSearchBar, setShowSearchBar] = useState(true);
-
-            useEffect(() => {
-              const handleScroll = () => {
-                if (window.scrollY > 100) {
-                  setShowSearchBar(false);
-                } else {
-                  setShowSearchBar(true);
-                }
-              };
-
-              window.addEventListener('scroll', handleScroll);
-              return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            return (
-              <div style={{ display: showSearchBar ? 'block' : 'none' }}>
-                {/* Search bar content */}
-              </div>
-            );
-          }
-        </script>
-
-        <main className="max-w-5xl mx-auto px-2 pt-8 space-y-8">
-          {children}
-        </main>
+        {/* Render children */}
+        <main>{children}</main>
       </body>
     </html>
   );
