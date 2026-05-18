@@ -12,15 +12,7 @@ export default function Home() {
       {/* Sticky Nav */}
       <nav className="sticky top-0 z-50 bg-white shadow-sm border-b">
         <div className="flex items-center justify-between px-4 py-2 max-w-5xl mx-auto">
-          <Link href="/" className="flex items-center gap-1 text-xl font-bold text-red-500">
-            <span className="w-5 h-5 inline-block">
-              {/* Red triangle logo */}
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="10,2 18,18 2,18" fill="#EF4444" />
-              </svg>
-            </span>
-            AirBNB
-          </Link>
+          {/* Removed duplicate AirBNB logo button, only global home button remains */}
           <div className="hidden md:flex gap-6 text-gray-700 font-medium">
             <Link href="/catalog" className="hover:text-red-500">Experiences</Link>
             <Link href="/services" className="hover:text-red-500">Services</Link>
