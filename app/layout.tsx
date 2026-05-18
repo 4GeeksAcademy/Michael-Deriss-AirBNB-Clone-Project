@@ -79,16 +79,32 @@ export default function RootLayout({
           </div>
         </div>
 
+        {/* Scroll behavior for search bar */}
         <script>
-          if (typeof window !== 'undefined') {
-            window.addEventListener('scroll', () => {
-              const searchBar = document.getElementById('search-bar');
-              if (window.scrollY > 100) {
-                searchBar.style.display = 'none';
-              } else {
-                searchBar.style.display = 'block';
-              }
-            });
+          import { useEffect } from 'react';
+          import { useState } from 'react';
+
+          export default function Layout() {
+            const [showSearchBar, setShowSearchBar] = useState(true);
+
+            useEffect(() => {
+              const handleScroll = () => {
+                if (window.scrollY > 100) {
+                  setShowSearchBar(false);
+                } else {
+                  setShowSearchBar(true);
+                }
+              };
+
+              window.addEventListener('scroll', handleScroll);
+              return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            return (
+              <div style={{ display: showSearchBar ? 'block' : 'none' }}>
+                {/* Search bar content */}
+              </div>
+            );
           }
         </script>
 
