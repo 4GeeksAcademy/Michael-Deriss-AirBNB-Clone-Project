@@ -22,7 +22,6 @@ export default function Home() {
             AirBNB
           </Link>
           <div className="hidden md:flex gap-6 text-gray-700 font-medium">
-            <Link href="/" className="hover:text-red-500">Home</Link>
             <Link href="/catalog" className="hover:text-red-500">Experiences</Link>
             <Link href="/services" className="hover:text-red-500">Services</Link>
           </div>
@@ -41,7 +40,6 @@ export default function Home() {
         <div className="flex flex-col items-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Welcome to AirBNB Clone</h1>
           <div className="flex gap-4 text-lg md:hidden mt-2">
-            <Link href="/" className="hover:text-red-500">Home</Link>
             <Link href="/catalog" className="hover:text-red-500">Experiences</Link>
             <Link href="/services" className="hover:text-red-500">Services</Link>
           </div>
