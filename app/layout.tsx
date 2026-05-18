@@ -68,7 +68,7 @@ export default function RootLayout({
         </nav>
 
         {/* Sticky search bar below nav */}
-        <div className="sticky top-[72px] z-30 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm py-4">
+        <div className="relative top-[72px] z-30 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm py-4" id="search-bar">
           <div className="flex flex-col items-center">
             <div className="flex gap-4 w-full max-w-2xl items-center justify-center">
               <button className="flex-1 px-6 py-3 rounded-full border border-gray-300 bg-gray-50 text-lg font-medium text-gray-700 shadow-sm hover:bg-red-50 transition">Where</button>
@@ -78,6 +78,19 @@ export default function RootLayout({
             </div>
           </div>
         </div>
+
+        <script>
+          if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', () => {
+              const searchBar = document.getElementById('search-bar');
+              if (window.scrollY > 100) {
+                searchBar.style.display = 'none';
+              } else {
+                searchBar.style.display = 'block';
+              }
+            });
+          }
+        </script>
 
         <main className="max-w-5xl mx-auto px-2 pt-8 space-y-8">
           {children}
