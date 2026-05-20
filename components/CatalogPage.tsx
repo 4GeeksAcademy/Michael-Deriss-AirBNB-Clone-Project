@@ -5,9 +5,27 @@ import Loading from './Loading';
 import CatalogSort from './CatalogSort';
 
 const mockListings: Listing[] = [
-  { id: '1', title: 'Landmark Tour', price: 120, category: 'Landmarks', image: '/landmark.jpg' },
-  { id: '2', title: 'Outdoor Adventure', price: 80, category: 'Outdoor', image: '/outdoor.jpg' },
-  { id: '3', title: 'Museum Visit', price: 60, category: 'Museums', image: '/museum.jpg' },
+  {
+    id: '1',
+    title: 'Landmark Tour',
+    price: 120,
+    category: 'Landmarks',
+    image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '2',
+    title: 'Outdoor Adventure',
+    price: 80,
+    category: 'Outdoor',
+    image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '3',
+    title: 'Museum Visit',
+    price: 60,
+    category: 'Museums',
+    image: 'https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=900&q=80',
+  },
 ];
 
 export default function CatalogPage() {
@@ -36,11 +54,13 @@ export default function CatalogPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
           {sortedListings.map((listing) => (
-            <div key={listing.id} className="bg-white rounded shadow p-4">
-              <img src={listing.image} alt={listing.title} className="w-full h-32 object-cover rounded mb-2" />
-              <div className="font-semibold">{listing.title}</div>
-              <div className="text-gray-500">{listing.category}</div>
-              <div className="text-red-500 font-bold">${listing.price}</div>
+            <div key={listing.id} className="bg-white rounded shadow p-4 flex flex-col items-center">
+              <img src={listing.image} alt={listing.title} className="w-24 h-24 object-cover rounded-lg mb-2 shadow-md border-2 border-gray-200" />
+              <div className="font-extrabold text-lg sm:text-xl text-indigo-700 mb-1 tracking-wide drop-shadow-md text-center">
+                {listing.title}
+              </div>
+              <div className="text-gray-500 italic text-sm mb-1 text-center">{listing.category}</div>
+              <div className="text-red-500 font-bold text-base">${listing.price}</div>
             </div>
           ))}
         </div>
