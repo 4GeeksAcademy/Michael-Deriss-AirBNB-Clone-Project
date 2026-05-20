@@ -1,3 +1,5 @@
+
+"use client";
 import React, { useState } from "react";
 
 export default function HostTypeModal({ onSelect, onClose }: { onSelect: (type: string) => void, onClose: () => void }) {
