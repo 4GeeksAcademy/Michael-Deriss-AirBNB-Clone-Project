@@ -20,22 +20,42 @@ const mockServices = [
   },
 ];
 
-export default function ServicesPage() {
-  const [services, setServices] = useState<typeof mockServices>([]);
+export default function ServicesPage({ lang = "en", t = {} }: { lang?: string; t?: Record<string, string> }) {
+  // Translated mock data
+  const translatedServices = [
+    {
+      id: '1',
+      name: t.barber || 'Barber',
+      image: 'https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=700&q=80',
+    },
+    {
+      id: '2',
+      name: t.massage || 'Massage',
+      image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=700&q=80',
+    },
+    {
+      id: '3',
+      name: t.chef || 'Chef',
+      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=700&q=80',
+    },
+  ];
+
+  const [services, setServices] = useState<typeof translatedServices>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setServices(mockServices);
+      setServices(translatedServices);
       setLoading(false);
     }, 800);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Services</h1>
+      <h1 className="text-2xl font-bold mb-4">{t.services || "Services"}</h1>
       {loading ? (
-        <Loading />
+        <Loading t={t} />
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {services.map((service) => (

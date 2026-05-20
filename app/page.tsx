@@ -10,7 +10,7 @@ const popularHomes = [
   { id: "5", city: "Los Angeles", title: "Guesthouse in Los Angeles", price: 417, nights: 2, rating: 4.99, image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" },
 ];
 
-export default function Home() {
+export default function Home(props: any) {
   const searchParams = useSearchParams();
   const selectedCities = useMemo(() => {
     const raw = searchParams.get("cities");
@@ -29,14 +29,17 @@ export default function Home() {
     return popularHomes.filter((home) => selectedCities.includes(home.city));
   }, [selectedCities]);
 
+  const { lang, t } = props;
+  // fallback for t
+  const tt = t || {};
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-4 pt-12 space-y-12">
         {/* Popular Homes Section */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Popular homes in Los Angeles</h2>
+          <h2 className="text-2xl font-bold mb-4">{tt.popularHomes || "Popular homes in Los Angeles"}</h2>
           {selectedCities.length > 0 && (
-            <p className="mb-4 text-sm text-gray-600">Filtered by: {selectedCities.join(", ")}</p>
+            <p className="mb-4 text-sm text-gray-600">{tt.filteredBy || "Filtered by:"} {selectedCities.join(", ")}</p>
           )}
           <div className="flex gap-4 overflow-x-auto">
             {filteredHomes.map((home) => (

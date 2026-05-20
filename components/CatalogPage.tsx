@@ -28,18 +28,44 @@ const mockListings: Listing[] = [
   },
 ];
 
-export default function CatalogPage() {
+export default function CatalogPage({ lang = "en", t = {} }: { lang?: string; t?: Record<string, string> }) {
   const [listings, setListings] = useState<Listing[]>([]);
   const [sortOrder, setSortOrder] = useState<'high' | 'low'>('low');
   const [loading, setLoading] = useState(true);
 
+  // Translated mock data
+  const translatedListings = [
+    {
+      id: '1',
+      title: t.landmarkTour || 'Landmark Tour',
+      price: 120,
+      category: t.landmarks || 'Landmarks',
+      image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      id: '2',
+      title: t.outdoorAdventure || 'Outdoor Adventure',
+      price: 80,
+      category: t.outdoor || 'Outdoor',
+      image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      id: '3',
+      title: t.museumVisit || 'Museum Visit',
+      price: 60,
+      category: t.museums || 'Museums',
+      image: 'https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=900&q=80',
+    },
+  ];
+
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      setListings(mockListings);
+      setListings(translatedListings);
       setLoading(false);
     }, 800);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   const sortedListings = [...listings].sort((a, b) =>
     sortOrder === 'high' ? b.price - a.price : a.price - b.price
@@ -47,10 +73,10 @@ export default function CatalogPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Experiences Catalog</h1>
-      <CatalogSort sortOrder={sortOrder} setSortOrder={setSortOrder} />
+      <h1 className="text-2xl font-bold mb-4">{t.catalogTitle || "Experiences Catalog"}</h1>
+      <CatalogSort sortOrder={sortOrder} setSortOrder={setSortOrder} t={t} />
       {loading ? (
-        <Loading />
+        <Loading t={t} />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
           {sortedListings.map((listing) => (

@@ -2,15 +2,16 @@
 "use client";
 import React, { useState } from "react";
 
-export default function HostTypeModal({ onSelect, onClose }: { onSelect: (type: string) => void, onClose: () => void }) {
+export default function HostTypeModal({ onSelect, onClose, t = {} }: { onSelect: (type: string) => void, onClose: () => void, t?: Record<string, string> }) {
   const [selected, setSelected] = useState<string | null>(null);
+  const hostTypes = [t.home || 'Home', t.experience || 'Experience', t.service || 'Service'];
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-40 overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative m-4 max-h-[95vh] overflow-y-auto">
         <button onClick={onClose} className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
-        <h2 className="text-2xl font-bold mb-6 text-center">What would you like to host?</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">{t.hostPrompt || 'What would you like to host?'}</h2>
         <div className="flex flex-col gap-4 mb-6">
-          {['Home', 'Experience', 'Service'].map((type) => (
+          {hostTypes.map((type) => (
             <button
               key={type}
               onClick={() => setSelected(type)}
@@ -25,7 +26,7 @@ export default function HostTypeModal({ onSelect, onClose }: { onSelect: (type: 
           disabled={!selected}
           onClick={() => selected && onSelect(selected)}
         >
-          Continue
+          {t.continue || 'Continue'}
         </button>
       </div>
     </div>
